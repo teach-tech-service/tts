@@ -1,4 +1,5 @@
 import mongoose, { Schema } from "mongoose";
+import planTypes from '../enums/planTypes'
 
 const CompanySchema = new mongoose.Schema(
   {
@@ -45,7 +46,7 @@ const CompanySchema = new mongoose.Schema(
     },
     plan: {
       type: Schema.Types.String,
-      enum: ["Basic", "Pro", "Enterprise"],
+      enum: planTypes,
       required: [true, "plan can not be empty"],
       default: "Basic"
     },
@@ -54,14 +55,9 @@ const CompanySchema = new mongoose.Schema(
       required: [true, "suspended can not be empty"],
       default: false
     },
-    KRS: {
-      type: Schema.Types.String,
-      required: [true, "KRS can not be empty"],
-      maxlength: 50
-    },
     email: {
       type: Schema.Types.String,
-      required: [true, "KRS can not be empty"],
+      required: [true, "email can not be empty"],
       validate: {
         validator: function(value) {
           const emailRegex = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
@@ -114,12 +110,6 @@ const CompanySchema = new mongoose.Schema(
       {
         type: Schema.Types.ObjectId,
         ref: "worker"
-      }
-    ],
-    orders: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "order"
       }
     ],
     countries: [
